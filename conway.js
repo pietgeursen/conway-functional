@@ -1,23 +1,23 @@
-exports.overPopulated = function overPopulated(population){
+function overPopulated(population){
     return population >= 3
 }
-exports.underPopulated = function(population){
+function underPopulated(population){
     return population < 2
 }
-exports.ressurectable = function(population){
+function ressurectable(population){
     return population == 3
 }
-exports.outOfBounds = function outOfBounds(index, array){
+function outOfBounds(index, array){
     return index < 0 || index >= array.length
 }
-exports.createBoard = function(size){
+function createBoard(size){
     var board = new Array(size)
     for(var i = 0; i < size; i++){
         board[i] = new Array(size)
     } 
     return board
 }
-exports.eachNeighbour = function(r,c,board){
+function eachNeighbour(r,c,board){
     var neighbours = []
     for(var i=-1; i<2; i++){
         for(var j=-1; j<2; j++){
@@ -26,7 +26,7 @@ exports.eachNeighbour = function(r,c,board){
             if(i == 0 && j == 0){
                 continue
             }
-            if(exports.outOfBounds(_r, board)|| exports.outOfBounds(_c, board[0])){
+            if(outOfBounds(_r, board)|| outOfBounds(_c, board[0])){
                 continue
             }
             neighbours.push(board[_r][_c])
@@ -34,3 +34,10 @@ exports.eachNeighbour = function(r,c,board){
     }
     return neighbours;
 }
+
+exports.eachNeighbour = eachNeighbour
+exports.outOfBounds = outOfBounds
+exports.ressurectable = ressurectable
+exports.underPopulated = underPopulated
+exports.overPopulated = overPopulated
+exports.createBoard = createBoard
