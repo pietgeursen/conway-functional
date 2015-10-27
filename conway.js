@@ -10,3 +10,10 @@ exports.ressurectable = function(population){
 exports.outOfBounds = function(index, array){
     return index < 0 || index >= array.length
 }
+exports.createBoard = function(size){
+    var board =  new Array(size)
+    for(var i = 0; i < size; i++){
+        board[i] = new Array(size)
+    } 
+    return board
+}
