@@ -17,7 +17,7 @@ function createBoard(size){
     } 
     return board
 }
-function eachNeighbour(r,c,board){
+function getNeighbours(r,c,board){
     var neighbours = []
     for(var i=-1; i<2; i++){
         for(var j=-1; j<2; j++){
@@ -35,10 +35,10 @@ function eachNeighbour(r,c,board){
     return neighbours;
 }
 function countAliveNeighbours(r,c,board){
-    var neighbours = eachNeighbour(r,c,board)
+    var neighbours = getNeighbours(r,c,board)
     return neighbours.filter(function(cell){return cell}).length
 }
-exports.eachNeighbour = eachNeighbour
+exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
 exports.ressurectable = ressurectable
 exports.underPopulated = underPopulated

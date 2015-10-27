@@ -45,14 +45,14 @@ describe('create board', function () {
         expect(board[9].length).to.be(10)
     })
 })
-describe('eachNeighbour', function () {
+describe('getNeighbours', function () {
     it ('should return 8 neigbours', function () {
         var board = conway.createBoard(10)
-        expect(conway.eachNeighbour(2,2, board).length).to.be(8) 
+        expect(conway.getNeighbours(2,2, board).length).to.be(8) 
     })
     it ('should return 3 neigbours for a corner cell', function () {
         var board = conway.createBoard(10)
-        expect(conway.eachNeighbour(0,0, board).length).to.be(3) 
+        expect(conway.getNeighbours(0,0, board).length).to.be(3) 
     })
 })
 describe('count alive neighbours',function(){
