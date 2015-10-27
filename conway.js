@@ -4,3 +4,6 @@ exports.overPopulated = function(population){
 exports.underPopulated = function(population){
     return population < 2
 }
+exports.ressurectable = function(population){
+    return population == 3
+}
