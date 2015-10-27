@@ -45,17 +45,27 @@ describe('create board', function () {
         expect(board[9].length).to.be(10)
     })
 })
+describe('eachNeighbour', function () {
+    it ('should return 8 neigbours', function () {
+        var board = conway.createBoard(10)
+        expect(conway.eachNeighbour(2,2, board).length).to.be(8) 
+    })
+    it ('should return 3 neigbours for a corner cell', function () {
+        var board = conway.createBoard(10)
+        expect(conway.eachNeighbour(0,0, board).length).to.be(3) 
+    })
+})
 describe('count alive neighbours',function(){
     it('return 8 for a cell with all alive neighbours', function(){
         var board = conway.createBoard(10)
         board[0][0] = true
         board[0][1] = true
+        board[0][2] = true
         board[1][0] = true
         board[2][0] = true
         board[2][1] = true
         board[2][2] = true
         board[1][2] = true
-        board[0][2] = true
         expect(conway.countAliveNeighbours(1, 1, board)).to.be(8)
     })
     it('returns 3 for a corner cell with all alive neighbours', function(){
@@ -67,13 +77,4 @@ describe('count alive neighbours',function(){
     })
 
 })
-describe('eachNeighbour', function () {
-    it ('should return 8 neigbours', function () {
-        var board = conway.createBoard(10)
-        expect(conway.eachNeighbour(2,2, board).length).to.be(8) 
-    })
-    it ('should return 3 neigbours for a corner cell', function () {
-        var board = conway.createBoard(10)
-        expect(conway.eachNeighbour(0,0, board).length).to.be(3) 
-    })
-})
+
