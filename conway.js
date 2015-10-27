@@ -10,6 +10,9 @@ function ressurectable(population){
 function outOfBounds(index, array){
     return index < 0 || index >= array.length
 }
+function indicesOutOfBounds(r,c, array){
+    return outOfBounds(r, array) || outOfBounds(c, array)
+}
 function createBoard(size){
     var board = new Array(size)
     for(var i = 0; i < size; i++){
@@ -40,6 +43,7 @@ function countAliveNeighbours(r,c,board){
 }
 exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
+exports.indicesOutOfBounds = indicesOutOfBounds
 exports.ressurectable = ressurectable
 exports.underPopulated = underPopulated
 exports.overPopulated = overPopulated
