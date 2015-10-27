@@ -34,10 +34,14 @@ function eachNeighbour(r,c,board){
     }
     return neighbours;
 }
-
+function countAliveNeighbours(r,c,board){
+    var neighbours = eachNeighbour(r,c,board)
+    return neighbours.filter(function(cell){return cell}).length
+}
 exports.eachNeighbour = eachNeighbour
 exports.outOfBounds = outOfBounds
 exports.ressurectable = ressurectable
 exports.underPopulated = underPopulated
 exports.overPopulated = overPopulated
 exports.createBoard = createBoard
+exports.countAliveNeighbours = countAliveNeighbours

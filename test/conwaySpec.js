@@ -46,17 +46,24 @@ describe('create board', function () {
     })
 })
 describe('count alive neighbours',function(){
-    xit('return 8 for a cell with all alive neighbours', function(){
+    it('return 8 for a cell with all alive neighbours', function(){
         var board = conway.createBoard(10)
+        board[0][0] = true
         board[0][1] = true
-        expect(conway.countAliveNeighbours(3, 3, board)).to.eq(8)
+        board[1][0] = true
+        board[2][0] = true
+        board[2][1] = true
+        board[2][2] = true
+        board[1][2] = true
+        board[0][2] = true
+        expect(conway.countAliveNeighbours(1, 1, board)).to.be(8)
     })
-    xit('return 3 for a corner cell with all alive neighbours', function(){
+    it('returns 3 for a corner cell with all alive neighbours', function(){
         var board = conway.createBoard(10)
         board[0][1] = true
         board[1][1] = true
         board[1][0] = true
-        expect(conway.countAliveNeighbours(0, 0, board)).to.eq(3)
+        expect(conway.countAliveNeighbours(0, 0, board)).to.be(3)
     })
 
 })
