@@ -37,7 +37,7 @@ describe('outOfBounds', function(){
         expect(conway.outOfBounds(0, [1])).to.be(false)
     })
 
-} )
+})
 describe('create board', function () {
     it ('should create a 2d array of the given dimensions', function () {
         var board = conway.createBoard(10)
