@@ -26,18 +26,6 @@ describe('ressurectable', function () {
         expect(conway.ressurectable(2)).to.be(false) 
     })
 })
-describe('indicesOutOfBounds', function(){
-    it ('returns true with an index < 0',function(){
-        expect(conway.indicesOutOfBounds(-1, 0, [])).to.be(true)
-    })
-    it ('returns true with an index larger >= array.length',function(){
-        expect(conway.indicesOutOfBounds(1, 0, [])).to.be(true)
-    })
-    it ('returns false with a valid index',function(){
-        expect(conway.indicesOutOfBounds(0, 0, [1])).to.be(false)
-    })
-
-})
 describe('outOfBounds', function(){
     it ('returns true with an index < 0',function(){
         expect(conway.outOfBounds(-1, [])).to.be(true)
@@ -47,6 +35,18 @@ describe('outOfBounds', function(){
     })
     it ('returns false with a valid index',function(){
         expect(conway.outOfBounds(0, [1])).to.be(false)
+    })
+
+})
+describe('indicesOutOfBounds', function(){
+    it ('returns true with an index < 0',function(){
+        expect(conway.indicesOutOfBounds(-1, 0, [])).to.be(true)
+    })
+    it ('returns true with an index larger >= array.length',function(){
+        expect(conway.indicesOutOfBounds(1, 0, [])).to.be(true)
+    })
+    it ('returns false with a valid index',function(){
+        expect(conway.indicesOutOfBounds(0, 0, [1])).to.be(false)
     })
 
 })
