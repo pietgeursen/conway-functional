@@ -57,6 +57,9 @@ function nextBoard(currentBoard){
         }
     return nextBoard
 }
+function displayBoard(board){
+
+}
 exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
 exports.indicesOutOfBounds = indicesOutOfBounds
@@ -67,4 +70,5 @@ exports.createBoard = createBoard
 exports.countAliveNeighbours = countAliveNeighbours
 exports.nextCellState = nextCellState
 exports.nextBoard = nextBoard
+exports.displayBoard = displayBoard
 
