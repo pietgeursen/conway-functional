@@ -43,7 +43,7 @@ function nextCellState(cellState, neighbourCount){
         return !overPopulated(neighbourCount) && !underPopulated(neighbourCount)
     }
     else{
-    
+        return ressurectable(neighbourCount) 
     }
 }
 exports.getNeighbours = getNeighbours
