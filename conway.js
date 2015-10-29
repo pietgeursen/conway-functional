@@ -58,7 +58,13 @@ function nextBoard(currentBoard){
     return nextBoard
 }
 function displayBoard(board){
-
+    for(var i = 0; i < board.length; i++){
+        for(j = 0; j < board.length; j++){
+            var char = board[i][j] ? '|X|' : '| |'
+            process.stdout.write(char)
+        }
+        process.stdout.write('\n')
+    }
 }
 exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
