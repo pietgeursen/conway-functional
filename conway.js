@@ -1,3 +1,5 @@
+var clear = require('clear');
+
 function overPopulated(population){
     return population > 3
 }
@@ -58,6 +60,7 @@ function nextBoard(currentBoard){
     return nextBoard
 }
 function displayBoard(board){
+    clear()
     for(var i = 0; i < board.length; i++){
         for(j = 0; j < board.length; j++){
             var char = board[i][j] ? '|X|' : '| |'
