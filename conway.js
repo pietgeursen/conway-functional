@@ -46,6 +46,17 @@ function nextCellState(cellState, neighbourCount){
         return ressurectable(neighbourCount) 
     }
 }
+function nextBoard(currentBoard){
+    var nextBoard = createBoard(currentBoard.length)
+        for (var i = 0; i < currentBoard.length; i++) {
+            for(var j = 0; j < currentBoard.length; j++){
+                var cell = currentBoard[i][j]
+                var neighbourCount = countAliveNeighbours(i, j, currentBoard)
+                nextBoard[i][j] = nextCellState(cell, neighbourCount)
+            }
+        }
+    return nextBoard
+}
 exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
 exports.indicesOutOfBounds = indicesOutOfBounds
@@ -55,3 +66,5 @@ exports.overPopulated = overPopulated
 exports.createBoard = createBoard
 exports.countAliveNeighbours = countAliveNeighbours
 exports.nextCellState = nextCellState
+exports.nextBoard = nextBoard
+
