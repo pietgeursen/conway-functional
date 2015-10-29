@@ -50,7 +50,7 @@ describe('indicesOutOfBounds', function(){
     })
 
 })
-describe('create board', function () {
+describe('createBoard', function () {
     it ('should create a 2d array of the given dimensions', function () {
         var board = conway.createBoard(10)
         expect(board.length).to.be(10)
