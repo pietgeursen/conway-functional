@@ -1,5 +1,5 @@
 function overPopulated(population){
-    return population >= 3
+    return population > 3
 }
 function underPopulated(population){
     return population < 2
@@ -38,6 +38,14 @@ function countAliveNeighbours(r,c,board){
     var neighbours = getNeighbours(r,c,board)
     return neighbours.filter(function(cell){return cell}).length
 }
+function nextCellState(cellState, neighbourCount){
+    if(cellState){
+        return !overPopulated(neighbourCount) && !underPopulated(neighbourCount)
+    }
+    else{
+    
+    }
+}
 exports.getNeighbours = getNeighbours
 exports.outOfBounds = outOfBounds
 exports.indicesOutOfBounds = indicesOutOfBounds
@@ -46,3 +54,4 @@ exports.underPopulated = underPopulated
 exports.overPopulated = overPopulated
 exports.createBoard = createBoard
 exports.countAliveNeighbours = countAliveNeighbours
+exports.nextCellState = nextCellState

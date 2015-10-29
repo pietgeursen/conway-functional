@@ -2,11 +2,11 @@ var expect = require('expect.js')
 var conway = require('../conway.js')
 
 describe('overPopulated', function () {
-    it ('should return true with cell count >= 3', function () {
-        expect(conway.overPopulated(3)).to.be(true) 
+    it ('should return true with cell count > 3', function () {
+        expect(conway.overPopulated(4)).to.be(true) 
     })
-    it ('should return false with cell count < 3', function () {
-        expect(conway.overPopulated(2)).to.be(false) 
+    it ('should return false with cell count < 4', function () {
+        expect(conway.overPopulated(3)).to.be(false) 
     })
 })
 
@@ -90,3 +90,13 @@ describe('count alive neighbours',function(){
 
 })
 
+describe('next cell state', function () {
+    it ('returns true if cell is alive and neighbour count is 2 or 3', function () {
+        expect(conway.nextCellState(true, 3)).to.be(true) 
+        expect(conway.nextCellState(true, 2)).to.be(true) 
+    })
+    xit ('should return 3 neigbours for a corner cell', function () {
+        var board = conway.createBoard(10)
+        expect(conway.getNeighbours(0,0, board).length).to.be(3) 
+    })
+})
