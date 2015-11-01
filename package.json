@@ -4,7 +4,8 @@
   "description": "",
   "main": "game.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "build": "browserify *.js -o dist/bundle.js"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +16,5 @@
     "mocha": "^2.3.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
   }
 }
