@@ -3,6 +3,10 @@ import {createStore} from 'redux'
 
 function conway(state = createBoard(10), action) {
 	switch(action.type){
+  case 'SET' :
+    let newState = state.slice()
+    newState[action.r][action.c] = true
+    return newState
 	case 'STEP':
 		return nextBoard(state)
 	default:

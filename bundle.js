@@ -48,15 +48,15 @@
 
 	var conway = __webpack_require__(1);
 	var board = conway.createBoard(15);
-	//Block
-	board[1][1] = true;
-	board[1][2] = true;
-	board[2][1] = true;
-	board[2][2] = true;
-	//blinker
-	board[5][3] = true;
-	board[5][4] = true;
-	board[5][5] = true;
+
+	conway.store.dispatch({ type: 'SET', r: 1, c: 1 });
+	conway.store.dispatch({ type: 'SET', r: 1, c: 2 });
+	conway.store.dispatch({ type: 'SET', r: 2, c: 1 });
+	conway.store.dispatch({ type: 'SET', r: 2, c: 2 });
+
+	conway.store.dispatch({ type: 'SET', r: 5, c: 3 });
+	conway.store.dispatch({ type: 'SET', r: 5, c: 4 });
+	conway.store.dispatch({ type: 'SET', r: 5, c: 5 });
 
 	function step() {
 	  conway.store.dispatch({ type: 'STEP' });
@@ -78,6 +78,10 @@
 		if (state === undefined) state = createBoard(10);
 
 		switch (action.type) {
+			case 'SET':
+				var newState = state.slice();
+				newState[action.r][action.c] = true;
+				return newState;
 			case 'STEP':
 				return nextBoard(state);
 			default:
