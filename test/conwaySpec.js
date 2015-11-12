@@ -1,5 +1,5 @@
 var expect = require('expect.js')
-var conway = require('../conway.js')
+var conway = require('../src/conway.js')
 
 describe('#overPopulated', function () {
     it ('should return true with cell count > 3', function () {

@@ -4,17 +4,18 @@
   "description": "",
   "main": "game.js",
   "scripts": {
-    "test": "mocha",
-    "build": "browserify *.js -o dist/bundle.js"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel": "^5.8.29",
     "clear": "0.0.1",
-    "expect.js": "^0.3.1",
-    "mocha": "^2.3.3"
+    "redux": "^3.0.4"
   },
   "devDependencies": {
+    "babel": "^5.8.29",
+    "babel-loader": "^6.1.0",
+    "expect.js": "^0.3.1",
+    "mocha": "^2.3.3"
   }
 }
