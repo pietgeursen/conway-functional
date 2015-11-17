@@ -1,3 +1,4 @@
+'use strict';
 var clear = require('clear');
 
 var conway = {

@@ -47,19 +47,24 @@
 	'use strict';
 
 	var conway = __webpack_require__(1);
-	var board = conway.createBoard(15);
+	var store = __webpack_require__(3)(10);
 
-	conway.store.dispatch({ type: 'SET', r: 1, c: 1 });
-	conway.store.dispatch({ type: 'SET', r: 1, c: 2 });
-	conway.store.dispatch({ type: 'SET', r: 2, c: 1 });
-	conway.store.dispatch({ type: 'SET', r: 2, c: 2 });
+	store.dispatch({ type: 'SET', r: 1, c: 1 });
+	store.dispatch({ type: 'SET', r: 1, c: 2 });
+	store.dispatch({ type: 'SET', r: 2, c: 1 });
+	store.dispatch({ type: 'SET', r: 2, c: 2 });
 
-	conway.store.dispatch({ type: 'SET', r: 5, c: 3 });
-	conway.store.dispatch({ type: 'SET', r: 5, c: 4 });
-	conway.store.dispatch({ type: 'SET', r: 5, c: 5 });
+	store.dispatch({ type: 'SET', r: 5, c: 3 });
+	store.dispatch({ type: 'SET', r: 5, c: 4 });
+	store.dispatch({ type: 'SET', r: 5, c: 5 });
+
+	store.subscribe(function () {
+		var board = store.getState();
+		conway.displayBoard(board);
+	});
 
 	function step() {
-	  conway.store.dispatch({ type: 'STEP' });
+		store.dispatch({ type: 'STEP' });
 	}
 
 	setInterval(step, 200);
@@ -69,117 +74,114 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
+	var clear = __webpack_require__(2);
 
-	var _redux = __webpack_require__(2);
+	var conway = {
+	    overPopulated: function overPopulated(population) {
+	        return population > 3;
+	    },
+	    underPopulated: function underPopulated(population) {
+	        return population < 2;
+	    },
+	    ressurectable: function ressurectable(population) {
+	        return population == 3;
+	    },
+	    outOfBounds: function outOfBounds(index, array) {
+	        return index < 0 || index >= array.length;
+	    },
+	    indicesOutOfBounds: function indicesOutOfBounds(r, c, array) {
+	        return this.outOfBounds(r, array) || this.outOfBounds(c, array);
+	    },
+	    createBoard: function createBoard(size) {
+	        var board = new Array(size);
+	        for (var i = 0; i < size; i++) {
+	            board[i] = new Array(size);
+	        }
+	        return board;
+	    },
+	    getNeighbours: function getNeighbours(r, c, board) {
+	        var neighbours = [];
+	        for (var i = -1; i < 2; i++) {
+	            for (var j = -1; j < 2; j++) {
+	                var _r = r + i;
+	                var _c = c + j;
+	                if (i == 0 && j == 0 || this.indicesOutOfBounds(_r, _c, board)) {
+	                    continue;
+	                }
+	                neighbours.push(board[_r][_c]);
+	            }
+	        }
+	        return neighbours;
+	    },
+	    countAliveNeighbours: function countAliveNeighbours(r, c, board) {
+	        var neighbours = this.getNeighbours(r, c, board);
+	        return neighbours.filter(function (cell) {
+	            return cell;
+	        }).length;
+	    },
+	    nextCellState: function nextCellState(cellState, neighbourCount) {
+	        if (cellState) {
+	            return !this.overPopulated(neighbourCount) && !this.underPopulated(neighbourCount);
+	        } else {
+	            return this.ressurectable(neighbourCount);
+	        }
+	    },
+	    nextBoard: function nextBoard(currentBoard) {
+	        var nextBoard = this.createBoard(currentBoard.length);
+	        for (var i = 0; i < currentBoard.length; i++) {
+	            for (var j = 0; j < currentBoard.length; j++) {
+	                var cell = currentBoard[i][j];
+	                var neighbourCount = this.countAliveNeighbours(i, j, currentBoard);
+	                nextBoard[i][j] = this.nextCellState(cell, neighbourCount);
+	            }
+	        }
+	        return nextBoard;
+	    },
+	    displayBoard: function displayBoard(board) {
+	        clear();
+	        for (var i = 0; i < board.length; i++) {
+	            for (var j = 0; j < board.length; j++) {
+	                var char = board[i][j] ? '|X|' : '| |';
+	                process.stdout.write(char);
+	            }
+	            process.stdout.write('\n');
+	        }
+	    }
+	};
 
-	var clear = __webpack_require__(11);
-
-	function conway(state, action) {
-		if (state === undefined) state = createBoard(10);
-
-		switch (action.type) {
-			case 'SET':
-				var newState = state.slice();
-				newState[action.r][action.c] = true;
-				return newState;
-			case 'STEP':
-				return nextBoard(state);
-			default:
-				return state;
-		}
-	}
-
-	var store = (0, _redux.createStore)(conway);
-	store.subscribe(function () {
-		var board = store.getState();
-		displayBoard(board);
-	});
-
-	function overPopulated(population) {
-		return population > 3;
-	}
-	function underPopulated(population) {
-		return population < 2;
-	}
-	function ressurectable(population) {
-		return population == 3;
-	}
-	function outOfBounds(index, array) {
-		return index < 0 || index >= array.length;
-	}
-	function indicesOutOfBounds(r, c, array) {
-		return outOfBounds(r, array) || outOfBounds(c, array);
-	}
-	function createBoard(size) {
-		var board = new Array(size);
-		for (var i = 0; i < size; i++) {
-			board[i] = new Array(size);
-		}
-		return board;
-	}
-	function getNeighbours(r, c, board) {
-		var neighbours = [];
-		for (var i = -1; i < 2; i++) {
-			for (var j = -1; j < 2; j++) {
-				var _r = r + i;
-				var _c = c + j;
-				if (i == 0 && j == 0 || indicesOutOfBounds(_r, _c, board)) {
-					continue;
-				}
-				neighbours.push(board[_r][_c]);
-			}
-		}
-		return neighbours;
-	}
-	function countAliveNeighbours(r, c, board) {
-		var neighbours = getNeighbours(r, c, board);
-		return neighbours.filter(function (cell) {
-			return cell;
-		}).length;
-	}
-	function nextCellState(cellState, neighbourCount) {
-		if (cellState) {
-			return !overPopulated(neighbourCount) && !underPopulated(neighbourCount);
-		} else {
-			return ressurectable(neighbourCount);
-		}
-	}
-	function nextBoard(currentBoard) {
-		var nextBoard = createBoard(currentBoard.length);
-		for (var i = 0; i < currentBoard.length; i++) {
-			for (var j = 0; j < currentBoard.length; j++) {
-				var cell = currentBoard[i][j];
-				var neighbourCount = countAliveNeighbours(i, j, currentBoard);
-				nextBoard[i][j] = nextCellState(cell, neighbourCount);
-			}
-		}
-		return nextBoard;
-	}
-	function displayBoard(board) {
-		clear();
-		for (var i = 0; i < board.length; i++) {
-			for (var j = 0; j < board.length; j++) {
-				var char = board[i][j] ? '|X|' : '| |';
-				process.stdout.write(char);
-			}
-			process.stdout.write('\n');
-		}
-	}
-	exports.getNeighbours = getNeighbours;
-	exports.outOfBounds = outOfBounds;
-	exports.indicesOutOfBounds = indicesOutOfBounds;
-	exports.ressurectable = ressurectable;
-	exports.underPopulated = underPopulated;
-	exports.overPopulated = overPopulated;
-	exports.createBoard = createBoard;
-	exports.countAliveNeighbours = countAliveNeighbours;
-	exports.nextCellState = nextCellState;
-	exports.nextBoard = nextBoard;
-	exports.displayBoard = displayBoard;
-	exports.store = store;
+	module.exports = conway;
 
 /***/ },
 /* 2 */
+/***/ function(module, exports) {
+
+	module.exports = function(clear) {
+	  if (clear !== false) {
+	    process.stdout.write('\033[2J');
+	  }
+	  process.stdout.write('\033[0f');
+	};
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _redux = __webpack_require__(4);
+
+	var reducer = __webpack_require__(13);
+	var createBoard = __webpack_require__(14).createBoard;
+
+	function configureStore(size) {
+	  return (0, _redux.createStore)(reducer);
+	}
+
+	module.exports = configureStore;
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -188,23 +190,23 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _createStore = __webpack_require__(3);
+	var _createStore = __webpack_require__(5);
 
 	var _createStore2 = _interopRequireDefault(_createStore);
 
-	var _utilsCombineReducers = __webpack_require__(5);
+	var _utilsCombineReducers = __webpack_require__(7);
 
 	var _utilsCombineReducers2 = _interopRequireDefault(_utilsCombineReducers);
 
-	var _utilsBindActionCreators = __webpack_require__(8);
+	var _utilsBindActionCreators = __webpack_require__(10);
 
 	var _utilsBindActionCreators2 = _interopRequireDefault(_utilsBindActionCreators);
 
-	var _utilsApplyMiddleware = __webpack_require__(9);
+	var _utilsApplyMiddleware = __webpack_require__(11);
 
 	var _utilsApplyMiddleware2 = _interopRequireDefault(_utilsApplyMiddleware);
 
-	var _utilsCompose = __webpack_require__(10);
+	var _utilsCompose = __webpack_require__(12);
 
 	var _utilsCompose2 = _interopRequireDefault(_utilsCompose);
 
@@ -215,7 +217,7 @@
 	exports.compose = _utilsCompose2['default'];
 
 /***/ },
-/* 3 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -225,7 +227,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utilsIsPlainObject = __webpack_require__(4);
+	var _utilsIsPlainObject = __webpack_require__(6);
 
 	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
 
@@ -383,7 +385,7 @@
 	}
 
 /***/ },
-/* 4 */
+/* 6 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -418,7 +420,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 5 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -428,17 +430,17 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _createStore = __webpack_require__(3);
+	var _createStore = __webpack_require__(5);
 
-	var _utilsIsPlainObject = __webpack_require__(4);
+	var _utilsIsPlainObject = __webpack_require__(6);
 
 	var _utilsIsPlainObject2 = _interopRequireDefault(_utilsIsPlainObject);
 
-	var _utilsMapValues = __webpack_require__(6);
+	var _utilsMapValues = __webpack_require__(8);
 
 	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
 
-	var _utilsPick = __webpack_require__(7);
+	var _utilsPick = __webpack_require__(9);
 
 	var _utilsPick2 = _interopRequireDefault(_utilsPick);
 
@@ -554,7 +556,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 6 */
+/* 8 */
 /***/ function(module, exports) {
 
 	/**
@@ -579,7 +581,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 7 */
+/* 9 */
 /***/ function(module, exports) {
 
 	/**
@@ -606,7 +608,7 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 8 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -616,7 +618,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _utilsMapValues = __webpack_require__(6);
+	var _utilsMapValues = __webpack_require__(8);
 
 	var _utilsMapValues2 = _interopRequireDefault(_utilsMapValues);
 
@@ -666,7 +668,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 9 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -679,7 +681,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var _compose = __webpack_require__(10);
+	var _compose = __webpack_require__(12);
 
 	var _compose2 = _interopRequireDefault(_compose);
 
@@ -732,7 +734,7 @@
 	module.exports = exports['default'];
 
 /***/ },
-/* 10 */
+/* 12 */
 /***/ function(module, exports) {
 
 	/**
@@ -762,16 +764,44 @@
 	module.exports = exports["default"];
 
 /***/ },
-/* 11 */
-/***/ function(module, exports) {
+/* 13 */
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = function(clear) {
-	  if (clear !== false) {
-	    process.stdout.write('\033[2J');
-	  }
-	  process.stdout.write('\033[0f');
+	'use strict';
+
+	var actions = __webpack_require__(14);
+
+	function reducer(state, action) {
+	    if (state === undefined) state = actions.createBoard(10);
+
+	    switch (action.type) {
+	        case 'SET':
+	            var newState = state.slice();
+	            newState[action.r][action.c] = true;
+	            return newState;
+	        case 'STEP':
+	            return actions.nextBoard(state);
+	        default:
+	            return state;
+	    }
+	}
+
+	module.exports = reducer;
+
+/***/ },
+/* 14 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var conway = __webpack_require__(1);
+
+	var actions = {
+	    nextBoard: conway.nextBoard.bind(conway),
+	    createBoard: conway.createBoard.bind(conway)
 	};
 
+	module.exports = actions;
 
 /***/ }
 /******/ ]);
