@@ -3,7 +3,7 @@ module.exports = {
     target: "node",
     output: {
         path: __dirname,
-        filename: "bundle.js"
+        filename: "index.js"
     },
     module: {
         loaders: [
