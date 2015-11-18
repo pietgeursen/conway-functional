@@ -13,7 +13,6 @@ store.dispatch({type: 'SET', r:5, c:5})
 
 store.subscribe(() => {
 	const board = store.getState()
-	conway.displayBoard(board)
 })
 
 function step() {
