@@ -1,6 +1,5 @@
 module.exports = {
     entry: "./src/game.js",
-    target: "node",
     output: {
         path: __dirname,
         filename: "index.js"
