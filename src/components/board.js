@@ -1,10 +1,10 @@
 var h = require('virtual-dom/h');
-var cell = require('./cell');
+var row = require('./row');
 
 function render(data) {
     return h('#board', 
-       data.map((row)=>{
-           return row.map((c)=>{return cell(c)})}) 
+       data.map((r)=>{
+           return row(r)}) 
         );
 }
 

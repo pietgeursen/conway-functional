@@ -3136,13 +3136,11 @@
 	'use strict';
 
 	var h = __webpack_require__(17);
-	var cell = __webpack_require__(65);
+	var row = __webpack_require__(66);
 
 	function render(data) {
-	   return h('#board', data.map(function (row) {
-	      return row.map(function (c) {
-	         return cell(c);
-	      });
+	   return h('#board', data.map(function (r) {
+	      return row(r);
 	   }));
 	}
 
@@ -3157,7 +3155,24 @@
 	var h = __webpack_require__(17);
 
 	function render(data) {
-	    return h('.cell', [data.toString()]);
+	    return h('.row', [data.toString()]);
+	}
+
+	module.exports = render;
+
+/***/ },
+/* 66 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var h = __webpack_require__(17);
+	var cell = __webpack_require__(65);
+
+	function render(data) {
+	    return h('.row', data.map(function (c) {
+	        return cell(c);
+	    }));
 	}
 
 	module.exports = render;
