@@ -1,5 +1,5 @@
 var conway = require('./conway.js')
-var store = require('./store.js')(10);
+var store = require('./store.js')(60);
 var board = require('./components/board.js')
 var vdux = require('vdux')
 
