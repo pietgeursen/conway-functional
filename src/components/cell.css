@@ -1,0 +1,11 @@
+.alive{
+    background-color: red;
+}
+.cell:before{
+    content: "";
+    padding-top: 100%;
+    display: block;
+}
+.cell {
+    margin: 0.1%
+}

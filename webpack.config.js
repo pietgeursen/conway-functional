@@ -1,13 +1,13 @@
 module.exports = {
     entry: "./src/game.js",
-    target: "node",
     output: {
         path: __dirname,
-        filename: "bundle.js"
+        filename: "index.js"
     },
     module: {
         loaders: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"}
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader"},
+            { test: /\.css$/, loader: "style-loader!css-loader" }
         ]
     }
 };
