@@ -5,7 +5,9 @@ function render (data) {
   return h(
     '.row',
     {style: {display: 'flex'}},
-    data.map((c) => { return cell(c) }))
+    data.map((c) => {
+      return cell(c)
+    }))
 }
 
 module.exports = render
