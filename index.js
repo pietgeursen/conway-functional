@@ -47,6 +47,7 @@
 	'use strict';
 
 	var store = __webpack_require__(4)(60);
+	var actions = __webpack_require__(15);
 	var board = __webpack_require__(16);
 	var vdux = __webpack_require__(41);
 
@@ -54,25 +55,16 @@
 	  return board(state);
 	};
 
-	function makeGlider() {
-	  store.dispatch({ type: 'SET', r: 4, c: 2 });
-	  store.dispatch({ type: 'SET', r: 4, c: 3 });
-	  store.dispatch({ type: 'SET', r: 4, c: 4 });
-	  store.dispatch({ type: 'SET', r: 3, c: 4 });
-	  store.dispatch({ type: 'SET', r: 2, c: 3 });
-	}
-
 	function spawnRandom() {
 	  for (var i = 0, l = store.getState().length; i < l; i++) {
 	    for (var j = 0; j < l; j++) {
 	      if (Math.random() > 0.7) {
-	        store.dispatch({ type: 'SET', r: i, c: j });
+	        store.dispatch(actions.set({ row: i, column: j }));
 	      }
 	    }
 	  }
 	}
 
-	makeGlider();
 	spawnRandom();
 
 	document.addEventListener('DOMContentLoaded', function () {
@@ -80,7 +72,7 @@
 	});
 
 	function step() {
-	  store.dispatch({ type: 'STEP' });
+	  store.dispatch(actions.step());
 	}
 	setInterval(step, 100);
 
@@ -286,7 +278,7 @@
 	var _redux = __webpack_require__(5);
 
 	var reducer = __webpack_require__(14);
-	var createBoard = __webpack_require__(15).createBoard;
+	var createBoard = __webpack_require__(1).createBoard;
 
 	function configureStore(size) {
 	  return (0, _redux.createStore)(reducer, createBoard(size));
@@ -884,18 +876,18 @@
 
 	'use strict';
 
-	var actions = __webpack_require__(15);
+	var conway = __webpack_require__(1);
 
 	function reducer(state, action) {
-	  if (state === undefined) state = actions.createBoard(10);
+	  if (state === undefined) state = conway.createBoard(10);
 
 	  switch (action.type) {
 	    case 'SET':
 	      var newState = state.slice();
-	      newState[action.r][action.c] = true;
+	      newState[action.location.row][action.location.column] = true;
 	      return newState;
 	    case 'STEP':
-	      return actions.nextBoard(state);
+	      return conway.nextBoard(state);
 	    default:
 	      return state;
 	  }
@@ -905,15 +897,25 @@
 
 /***/ },
 /* 15 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
 	'use strict';
 
-	var conway = __webpack_require__(1);
+	var SET = 'SET';
+	var STEP = 'STEP';
 
 	var actions = {
-	  nextBoard: conway.nextBoard.bind(conway),
-	  createBoard: conway.createBoard.bind(conway)
+	  set: function set(location) {
+	    return {
+	      type: SET,
+	      location: location
+	    };
+	  },
+	  step: function step() {
+	    return {
+	      type: STEP
+	    };
+	  }
 	};
 
 	module.exports = actions;

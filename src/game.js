@@ -11,7 +11,7 @@ function spawnRandom () {
   for (var i = 0, l = store.getState().length; i < l; i++) {
     for (var j = 0; j < l; j++) {
       if (Math.random() > 0.7) {
-        store.dispatch(actions.set( {row: i, column: j} ))
+        store.dispatch(actions.set({row: i, column: j}))
       }
     }
   }

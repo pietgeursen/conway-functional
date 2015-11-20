@@ -1,15 +1,15 @@
-const SET = 'SET' 
+const SET = 'SET'
 const STEP = 'STEP'
 
 var actions = {
   set: function (location) {
-    return{
+    return {
       type: SET,
       location
     }
   },
-  step: function (){
-    return{
+  step: function () {
+    return {
       type: STEP
     }
   }
