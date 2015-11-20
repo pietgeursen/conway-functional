@@ -1,13 +1,14 @@
 var actions = require('./actions.js')
+var conway = require('./conway.js');
 
-function reducer (state = actions.createBoard(10), action) {
+function reducer (state = conway.createBoard(10), action) {
   switch (action.type) {
     case 'SET' :
       let newState = state.slice()
-      newState[action.r][action.c] = true
+      newState[action.location.row][action.location.column] = true
       return newState
     case 'STEP':
-      return actions.nextBoard(state)
+      return conway.nextBoard(state)
     default:
       return state
   }

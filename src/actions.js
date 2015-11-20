@@ -1,8 +1,18 @@
-var conway = require('./conway.js')
+const SET = 'SET' 
+const STEP = 'STEP'
 
 var actions = {
-  nextBoard: conway.nextBoard.bind(conway),
-  createBoard: conway.createBoard.bind(conway)
+  set: function (location) {
+    return{
+      type: SET,
+      location
+    }
+  },
+  step: function (){
+    return{
+      type: STEP
+    }
+  }
 }
 
 module.exports = actions

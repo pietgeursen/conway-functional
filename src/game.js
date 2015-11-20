@@ -1,4 +1,5 @@
 var store = require('./store.js')(60)
+var actions = require('./actions.js')
 var board = require('./components/board.js')
 var vdux = require('vdux')
 
@@ -6,25 +7,16 @@ var app = (state) => {
   return board(state)
 }
 
-function makeGlider () {
-  store.dispatch({type: 'SET', r: 4, c: 2})
-  store.dispatch({type: 'SET', r: 4, c: 3})
-  store.dispatch({type: 'SET', r: 4, c: 4})
-  store.dispatch({type: 'SET', r: 3, c: 4})
-  store.dispatch({type: 'SET', r: 2, c: 3})
-}
-
 function spawnRandom () {
   for (var i = 0, l = store.getState().length; i < l; i++) {
     for (var j = 0; j < l; j++) {
       if (Math.random() > 0.7) {
-        store.dispatch({type: 'SET', r: i, c: j})
+        store.dispatch(actions.set( {row: i, column: j} ))
       }
     }
   }
 }
 
-makeGlider()
 spawnRandom()
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,6 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 function step () {
-  store.dispatch({type: 'STEP'})
+  store.dispatch(actions.step())
 }
 setInterval(step, 100)
