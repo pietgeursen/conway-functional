@@ -6,5 +6,5 @@
 ## Dev
  `webpack --watch`
  
-## build
+## Dist
  `webpack --optimize-minimize`
