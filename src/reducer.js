@@ -1,4 +1,4 @@
-var conway = require('./conway.js')
+var conway = require('conways')
 
 function reducer (state = conway.createBoard(10), action) {
   switch (action.type) {
