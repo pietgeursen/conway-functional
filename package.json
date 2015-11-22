@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "clear": "0.0.1",
+    "conways": "0.0.1",
     "redux": "^3.0.4",
     "vdux": "^0.1.8",
     "virtual-dom": "^2.1.1"

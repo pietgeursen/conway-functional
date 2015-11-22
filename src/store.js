@@ -1,5 +1,5 @@
 var reducer = require('./reducer.js')
-var createBoard = require('./conway').createBoard
+var createBoard = require('conways').createBoard
 
 import { createStore } from 'redux'
 
