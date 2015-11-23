@@ -7,7 +7,8 @@ function render (data) {
     {style: {display: 'flex'}},
     data.map((c) => {
       return cell(c)
-    }))
+    })
+  )
 }
 
 module.exports = render
