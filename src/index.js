@@ -1,7 +1,8 @@
+var vdux = require('vdux')
+
 var store = require('./store.js')(60)
 var actions = require('./actions.js')
 var board = require('./components/board.js')
-var vdux = require('vdux')
 
 var app = (state) => {
   return board(state)

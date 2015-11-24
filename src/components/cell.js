@@ -1,11 +1,21 @@
 var h = require('virtual-dom/h')
-require('./cell.css')
+var sheetify = require('sheetify')
+var classNames = require('classnames')
+
+var prefix = sheetify('./cell.css')
 
 function render (data) {
-  return h(
-    '.cell ' + (data ? '.alive' : '.dead'),
-    {style: {flex: '1'}}
-  )
+  // TODO find a way to remove this wrapper div
+  // while still using sheetify
+  return h('div', {
+    className: prefix
+  }, [
+    h('div', {
+      className: classNames(['cell', {
+        alive: !!data, dead: !data
+      }])
+    })
+  ])
 }
 
 module.exports = render
